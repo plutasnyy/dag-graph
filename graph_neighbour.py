@@ -21,7 +21,10 @@ class graph_neighbour(object):
         for i in range(0,self.vertices_count+1):
             pom=[]
             for j in range(0,self.vertices_count+1):
-                pom.append(0)
+                if i==0 or j==0:
+                    pom.append(-1)
+                else:
+                    pom.append(0)
             self.macierz.append(pom)
 
     def __init__(self):
@@ -78,23 +81,25 @@ class graph_neighbour(object):
             if i in visited_list:
                 tab[i]=-1
             else:
-                for j in self.edges_list[i][1]:
-                    if j not in visited_list:
+                pom=0
+                for j in range(1,len(self.macierz[i])):
+                    if j not in visited_list and self.macierz[i][j]:
                         tab[j]+=1
         tab[0]=-1
         return tab
 
-    def DFS_sort(self,vert=None,visited=[]):
-        if vert==None or self.edges_list[vert][0]=='szary':
+    def DFS_sort(self,colors,vert=None,visited=[]):
+        if  vert==None or colors[vert]=='szary':
             return False
-        if self.edges_list[vert][0]=='czarny':
+        if colors[vert]=='czarny':
             return True
-        self.edges_list[vert][0]='szary'
+        colors[vert]='szary'
         visited.append(vert)
-        for i in self.edges_list[vert][1]:
-            if self.DFS_sort(i,visited)==False:
-                return False;
-        self.edges_list[vert][0]='czarny'
+        for i in range(1,self.vertices_count+1):
+            if self.macierz[vert][i]==1:
+                if self.DFS_sort(colors,i,visited)==False:
+                    return False;
+        colors[vert]='czarny'
         self.stack.append(vert)
         return True;
 
@@ -105,10 +110,13 @@ class graph_neighbour(object):
         print(tab)
 
     def dfs_sort(self):
+        colors=[]
+        for i in range(0,self.vertices_count+1):
+            colors.append("bialy")
         tab=self.vertices_degrees()
         pom=[x for x in range(1,len(tab)) if tab[x]==0]
         for i in pom:
-            if self.DFS_sort(i)==False:
+            if self.DFS_sort(colors,i,[])==False:
                 print("Wykryto cykl")
         self.print_stack()
 

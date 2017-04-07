@@ -6,8 +6,11 @@ graph=graph_list()
 graph.print_edges()
 graph.dfs_sort()
 graph.del_sort()
-
+print(graph.vertices_degrees())
 print("")
 
 graph=graph_neighbour()
 graph.print_edges()
+print(graph.vertices_degrees())
+graph.del_sort()
+graph.dfs_sort()
