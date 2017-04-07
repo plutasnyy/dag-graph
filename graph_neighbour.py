@@ -1,4 +1,4 @@
-class graph_list(object):
+class graph_neighbour(object):
 
     def input_digit(self):
         value=input()
@@ -17,16 +17,15 @@ class graph_list(object):
                         first='a'
         print("OK")
         return int(first),int(second)
-    def small_init(self,edges):
+    def small_init(self):
         for i in range(0,self.vertices_count+1):
-            self.edges_list.append(["bialy"])
-            edges.append([])#wypelnia tablice
-    def write_to_list(self,edges):
-        for i in range(1,self.vertices_count+1):
-            self.edges_list[i].append(edges[i])
+            pom=[]
+            for j in range(0,self.vertices_count+1):
+                pom.append(0)
+            self.macierz.append(pom)
 
     def __init__(self):
-        self.edges_list=[]
+        self.macierz=[]
         self.stack=[]
         self.vertices_count,self.edges_count=0,0
 
@@ -36,16 +35,14 @@ class graph_list(object):
             temp_list=dane[0].split(' ')
             self.vertices_count,self.edges_count=int(temp_list[0]),int(temp_list[1])
             temp_list.clear()
-            edges=[]
-            self.small_init(edges)
+
+            self.small_init()
 
             for i in range(1,len(dane)):
                 temp_list=dane[i].split(" ")
                 if temp_list[0].isdigit()==True:
                     first,second=int(temp_list[0]),int(temp_list[1])
-                    edges[first].append(second)
-
-            self.write_to_list(edges)
+                    self.macierz[first][second]=1
             plik.close()
         except FileNotFoundError:
             print("Najpierw podaj liczbe wierzcholkow:")
@@ -57,18 +54,21 @@ class graph_list(object):
             print("Nastepnie wprowadz krawedzie w postaci wierzcholek z ktorego krawedz wychodzi, a nastepnie do ktorego wchodzi np:")
             print("0 1\nOznacza 0 -> 1\nZapisane dane sa sygnalizowane poprzez OK, brak sygnalu oznacza bledny format, petle wlasna, badz przekroczenie zakresu")
 
-            edges=[]
-            self.small_init(edges)
-
+            self.small_init()
             for i in range(0,self.edges_count):
                 first,second=self.input_edge()
-                edges[first].append(second)
-
-            self.write_to_list(edges)
+                self.macierz[first][second]=1
 
     def print_edges(self):
         for i in range(1,self.vertices_count+1):
-            print(i,"->",self.edges_list[i])
+            pom=[]
+            pom2=[""]
+            for j in range(1,self.vertices_count+1):
+                pom2.append(j)
+                pom.append(self.macierz[i][j])
+            if i == 1:
+                print(pom2)
+            print(i,",", pom)
 
     def vertices_degrees(self,visited_list=[]):
         tab=[]
