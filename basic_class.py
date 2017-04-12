@@ -12,7 +12,7 @@ class basic_class(object):
                 if(len(dane)==2):
                     first,second=dane[0],dane[1]
                     pom=str(self.vertices_count)
-                    if first<'0' or first>pom or second<'0' or second>pom or first==second:
+                    if first<='0' or first>pom or second<='0' or second>pom or first==second:
                         first='a'
         print("OK")
         return int(first),int(second)

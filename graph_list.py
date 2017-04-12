@@ -24,7 +24,7 @@ class graph_list(basic_class):
 
             for i in range(1,len(dane)):
                 temp_list=dane[i].split(" ")
-                if temp_list[0].isdigit()==True:
+                if temp_list[0].isdigit()==True and temp_list[1].isdigit()==True:
                     first,second=int(temp_list[0]),int(temp_list[1])
                     edges[first].append(second)
 

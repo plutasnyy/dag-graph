@@ -1,6 +1,7 @@
 import sys
 from graph_list import graph_list
 from graph_neighbour import graph_neighbour
+from graph_matrix_graph import graph_matrix
 
 graph=graph_list()
 graph.print_edges()
@@ -11,6 +12,10 @@ print("")
 
 graph=graph_neighbour()
 graph.print_edges()
-print(graph.vertices_degrees())
 graph.del_sort()
 graph.dfs_sort()
+print(graph.vertices_degrees())
+print("")
+
+graph=graph_matrix()
+graph.print_edges()
