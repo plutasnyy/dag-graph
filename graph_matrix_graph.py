@@ -10,7 +10,8 @@ class graph_matrix(basic_class):
             for j in range(0,self.vertices_count+2):
                 pom.append(0)
             self.macierz.append(pom)
-        self.macierz[0][0]=self.macierz[0][ver]=self.macierz[ver][0]=self.macierz[ver][ver]=-1
+        self.macierz[0][0]=self.macierz[0][ver]=-1
+        self.macierz[ver][0]=self.macierz[ver][ver]=-1
 
 
     def __init__(self):
@@ -33,6 +34,7 @@ class graph_matrix(basic_class):
                     first,second=int(temp_list[0]),int(temp_list[1])
                     self.add_in_matrix(first,second)
             plik.close()
+
         except FileNotFoundError:
             print("Najpierw podaj liczbe wierzcholkow:")
             self.vertices_count=self.input_digit()
