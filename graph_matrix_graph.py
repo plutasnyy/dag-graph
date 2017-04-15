@@ -1,21 +1,53 @@
 from basic_class import basic_class
 class graph_matrix(basic_class):
+    def add_first_pointers(self,first,second):
+        if self.matrix[first][self.vertices_count+1]==-1:
+            self.matrix[first][self.vertices_count+1]=second
+        if self.matrix[second][0]==-1:
+            self.matrix[second][0]=first
+        if self.matrix[0][second]==-1:
+            self.matrix[0][second]=first
+        if self.matrix[self.vertices_count+1][first]==-1:
+            self.matrix[self.vertices_count+1][first]=second
+
     def add_in_matrix(self,first,second):
-        pass
+        self.add_first_pointers(first,second)
+
+        self.matrix[first][second]=second+self.vertices_count#aktualizacja dla nastepnika
+        pom=self.matrix[self.vertices_count+1][first]
+        self.matrix[first][pom]=second+self.vertices_count
+
+        self.matrix[second][first]=first
+        pom=self.matrix[0][second]
+        self.matrix[second][pom]=first
+
+        self.matrix[0][second]=first#modyfikacja ostatnich wskaznikow
+        self.matrix[self.vertices_count+1][first]=second
+
+    def insert_minus_number(self):
+        for i in range(1,self.vertices_count+1):
+            X=[x for x in range(1,self.vertices_count+1) if self.matrix[i][x]<0 and x is not i]
+            if len(X)>=1:
+                self.matrix[i][i]=-1*X[0]
+                pom=X[0]
+                for j in range(1,len(X)):
+                    self.matrix[i][pom]=-1*X[j]
+                    pom=X[j]
+                self.matrix[i][pom]=-1*pom
+            else:
+                self.matrix[i][i]=-1*i
 
     def small_init(self):
         ver=self.vertices_count+1
         for i in range(0,self.vertices_count+2):
             pom=[]
             for j in range(0,self.vertices_count+2):
-                pom.append(0)
-            self.macierz.append(pom)
-        self.macierz[0][0]=self.macierz[0][ver]=-1
-        self.macierz[ver][0]=self.macierz[ver][ver]=-1
+                pom.append(-1)
+            self.matrix.append(pom)
 
 
     def __init__(self):
-        self.macierz=[]
+        self.matrix=[]
         self.stack=[]
         self.vertices_count,self.edges_count=0,0
 
@@ -43,12 +75,14 @@ class graph_matrix(basic_class):
             self.edges_count=self.input_digit()
 
             print("Nastepnie wprowadz krawedzie w postaci wierzcholek z ktorego krawedz wychodzi, a nastepnie do ktorego wchodzi np:")
-            print("0 1\nOznacza 0 -> 1\nZapisane dane sa sygnalizowane poprzez OK, brak sygnalu oznacza bledny format, petle wlasna, badz przekroczenie zakresu")
+            print("1 3\nOznacza 1 -> 3\nZapisane dane sa sygnalizowane poprzez OK, brak sygnalu oznacza bledny format, petle wlasna, badz przekroczenie zakresu")
 
             self.small_init()
             for i in range(0,self.edges_count):
                 first,second=self.input_edge()
                 self.add_in_matrix(first,second)
+
+        self.insert_minus_number()
 
     def print_edges(self):
         for i in range(0,self.vertices_count+2):
@@ -56,7 +90,7 @@ class graph_matrix(basic_class):
             pom2=[""]
             for j in range(0,self.vertices_count+2):
                 pom2.append(j)
-                pom.append(self.macierz[i][j])
+                pom.append(self.matrix[i][j])
             if i == 0:
                 print(pom2)
             print(i,",", pom)

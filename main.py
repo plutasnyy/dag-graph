@@ -4,10 +4,10 @@ from graph_neighbour import graph_neighbour
 from graph_matrix_graph import graph_matrix
 from generate_dag import dag
 
-dag=dag()
-dag.generate(10,30)
+#dag=dag()
+#dag.generate(10,30)
 
-#graph=graph_list()
+graph=graph_list()
 #graph.print_edges()
 #graph.dfs_sort()
 #graph.del_sort()
@@ -19,7 +19,7 @@ dag.generate(10,30)
 #graph.dfs_sort()
 #graph.del_sort()
 #print(graph.vertices_degrees())
-#print("")
+print("")
 
 graph=graph_matrix()
 graph.print_edges()

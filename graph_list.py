@@ -38,7 +38,7 @@ class graph_list(basic_class):
             self.edges_count=self.input_digit()
 
             print("Nastepnie wprowadz krawedzie w postaci wierzcholek z ktorego krawedz wychodzi, a nastepnie do ktorego wchodzi np:")
-            print("0 1\nOznacza 0 -> 1\nZapisane dane sa sygnalizowane poprzez OK, brak sygnalu oznacza bledny format, petle wlasna, badz przekroczenie zakresu")
+            print("1 3\nOznacza 1 -> 3\nZapisane dane sa sygnalizowane poprzez OK, brak sygnalu oznacza bledny format, petle wlasna, badz przekroczenie zakresu")
 
             edges=[]
             self.small_init(edges)
