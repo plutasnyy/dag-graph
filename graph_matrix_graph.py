@@ -97,10 +97,10 @@ class graph_matrix(basic_class):
 
     def in_level(self,i,indeks,visited_list):
         temp=self.matrix[i][indeks]
-        if temp<=0 or temp==indeks or temp in visited_list:
+        if temp<=0 or temp==indeks:
             return 0
         else:
-            return self.in_level(i,temp,visited_list)+1
+            return self.in_level(i,temp,visited_list)+1-(temp in visited_list)
 
     def vertices_degrees(self,visited_list=[]):
         tab=[]
@@ -111,9 +111,33 @@ class graph_matrix(basic_class):
             tab[i]=-1
         return tab
 
-#    def DFS_sort(self,colors,vert=None,visited=[]):
+    def DFS_sort(self,colors,vert=None,visited=[]):
+        if  vert==None or colors[vert]=='szary':
+            return False
+        if colors[vert]=='czarny':
+            return True
+        colors[vert]='szary'
+        visited.append(vert)
+        count=self.vertices_count
+        X=[x for x in range(1,count+1) if self.matrix[vert][x]>count]
+        for i in X:
+            if i is not vert:
+                if self.DFS_sort(colors,i,visited)==False:
+                    return False;
+        colors[vert]='czarny'
+        self.stack.append(vert)
+        return True;
 
-#    def dfs_sort(self):
+    def dfs_sort(self):
+        colors=[]
+        for i in range(0,self.vertices_count+1):
+            colors.append("bialy")
+        tab=self.vertices_degrees()
+        pom=[x for x in range(1,len(tab)) if tab[x]==0]
+        for i in pom:
+            if self.DFS_sort(colors,i,[])==False:
+                print("Wykryto cykl")
+        self.print_stack()
 
     def DEL_sort(self,visited=[]):
         tab=self.vertices_degrees(visited)
