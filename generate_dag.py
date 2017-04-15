@@ -19,6 +19,12 @@ class dag(object):
         for i in range(counter-self.number_of_edges):
             X.pop(random.randrange(len(X)))
 
+        Y=[x for x in range(1,self.number_of_vertices+1)]
+        random.shuffle(Y)
+
+        for i in range(0,len(X)):
+            X[i][0],X[i][1]=Y[X[i][0]-1],Y[X[i][1]-1]
+
         plik=open("dag.txt","w")
 
         plik.write("{} {}".format(self.number_of_vertices,self.number_of_edges))

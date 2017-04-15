@@ -95,7 +95,21 @@ class graph_matrix(basic_class):
                 print(pom2)
             print(i,",", pom)
 
-#    def vertices_degrees(self,visited_list=[]):
+    def in_level(self,i,indeks,visited_list):
+        temp=self.matrix[i][indeks]
+        if temp<=0 or temp==indeks or temp in visited_list:
+            return 0
+        else:
+            return self.in_level(i,temp,visited_list)+1
+
+    def vertices_degrees(self,visited_list=[]):
+        tab=[]
+        tab.append(-1)
+        for i in range(1,self.vertices_count+1):
+            tab.append(self.in_level(i,0,visited_list))
+        for i in visited_list:
+            tab[i]=-1
+        return tab
 
 #    def DFS_sort(self,colors,vert=None,visited=[]):
 
