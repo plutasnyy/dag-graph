@@ -49,38 +49,14 @@ class graph_matrix(basic_class):
     def __init__(self):
         self.matrix=[]
         self.stack=[]
-        self.vertices_count,self.edges_count=0,0
 
-        try:
-            plik = open("dag.txt")
-            dane = plik.read().split("\n")
-            temp_list=dane[0].split(' ')
-            self.vertices_count,self.edges_count=int(temp_list[0]),int(temp_list[1])
-            temp_list.clear()
+        input_data=self.read_data()
+        self.vertices_count,self.edges_count=input_data[0]
+        self.small_init()
 
-            self.small_init()
-
-            for i in range(1,len(dane)):
-                temp_list=dane[i].split(" ")
-                if temp_list[0].isdigit()==True and temp_list[1].isdigit()==True:
-                    first,second=int(temp_list[0]),int(temp_list[1])
-                    self.add_in_matrix(first,second)
-            plik.close()
-
-        except FileNotFoundError:
-            print("Najpierw podaj liczbe wierzcholkow:")
-            self.vertices_count=self.input_digit()
-
-            print("Teraz podaj liczbe krawedzi:")
-            self.edges_count=self.input_digit()
-
-            print("Nastepnie wprowadz krawedzie w postaci wierzcholek z ktorego krawedz wychodzi, a nastepnie do ktorego wchodzi np:")
-            print("1 3\nOznacza 1 -> 3\nZapisane dane sa sygnalizowane poprzez OK, brak sygnalu oznacza bledny format, petle wlasna, badz przekroczenie zakresu")
-
-            self.small_init()
-            for i in range(0,self.edges_count):
-                first,second=self.input_edge()
-                self.add_in_matrix(first,second)
+        for i in range(1,len(input_data)):
+            first,second=input_data[i]
+            self.add_in_matrix(first,second)
 
         self.insert_minus_number()
 
