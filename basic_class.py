@@ -5,6 +5,7 @@ class basic_class(object):
         while(value.isdigit()==False):
                 print("Pamietaj aby wprowadzic cyfre:")
                 value=input()
+        print("OK")
         return int(value)
 
     def input_edge(self):
@@ -28,7 +29,7 @@ class basic_class(object):
     def read_data(self):
 
         edges_list=[]
-        
+
         try:
             plik = open("dag.txt")
             dane = plik.read().split("\n")
@@ -41,18 +42,23 @@ class basic_class(object):
             plik.close()
 
         except FileNotFoundError:
-            print("Najpierw podaj liczbe wierzcholkow:")
-            vertices_count=self.input_digit()
+            print("Krawedzie prowadzaj parami wraz z odstepem spacji, np 1 2 oznacza krawedz skierowana 1->2")
+            print("Zaakceptowanie danych jest sygnalizowane przez OK, brak sygnalu oznacza blad")
+            print("Zacznij od wprowadzenia liczby wierzcholkow, a potem krawedzi. POJEDYNCZO")
 
-            print("Teraz podaj liczbe krawedzi:")
-            edges_count=self.input_digit()
-
-            edges_list.append([vertices_count,edges_count])
-            print("Nastepnie wprowadz krawedzie w postaci wierzcholek z ktorego krawedz wychodzi, a nastepnie do ktorego wchodzi np:")
-            print("1 3\nOznacza 1 -> 3\nZapisane dane sa sygnalizowane poprzez OK, brak sygnalu oznacza bledny format, petle wlasna, badz przekroczenie zakresu")
+            self.vertices_count=self.input_digit()
+            self.edges_count=self.input_digit()
+            edges_list.append([self.vertices_count,self.edges_count])
 
             for i in range(self.edges_count):
                 first,second=self.input_edge()
-                edges_list.append(first,second)
+                edges_list.append([first,second])
+
+            plik=open("dag.txt","w")
+
+            for i,j in edges_list:
+                plik.write("\n{} {}".format(i,j))
+
+            plik.close()
 
         return edges_list
